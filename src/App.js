@@ -95,8 +95,13 @@ function App() {
       const formData = new FormData();
       formData.append('image', selectedFile);
 
+      // Determine backend URL based on NODE_ENV
+      const backendURL = process.env.NODE_ENV === 'development'
+        ? process.env.REACT_APP_BACKEND_URL_DEV
+        : process.env.REACT_APP_BACKEND_URL_PROD;
+      console.log('backend url', backendURL)
       axios
-        .post('http://localhost:5000/predict', formData, {
+        .post(`${backendURL}/predict`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
