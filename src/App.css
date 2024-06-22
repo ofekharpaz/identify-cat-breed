@@ -1,38 +1,231 @@
-.App {
-  text-align: center;
+/* Existing styles remain unchanged */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+body {
+  background: linear-gradient(
+    135deg,
+    #121212 0%,
+    #2b005b 25%,
+    #6200ee 50%,
+    #3b0077 75%,
+    #121212 100%
+  );
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  color: white;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.title {
+  justify-content: center;
+  align-items: center;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  display: flex;
+  min-height: 100vh; /* Ensure header expands to at least viewport height */
+  justify-content: center;
+  align-items: center;
+}
+
+.main-content {
+  padding: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: auto; /* Center content horizontally */
+  background-color: rgba(68, 59, 55, 0.6);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* Switch to single column on smaller screens */
+  }
+  .cat-image {
+    display: none;
+  }
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column layout by default */
+  grid-template-rows: auto; /* Single row */
+  gap: 20px; /* Gap between grid items */
+}
+
+
+.upload-section {
+  margin-bottom: 20px; /* Add space between sections */
+}
+
+.upload-container {
+  cursor: pointer;
+}
+
+.upload-box {
+  position: relative; /* Relative position for centered content */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 85%;
+  border: 4px dashed #6200ee; /* Increased border width for more space */
+  border-radius: 15px;
+  transition: border-color 0.3s;
+  padding: 20px;
+  text-align: center;
+}
+
+.upload-text {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8); /* Light grey text color with opacity */
+  margin-bottom: 10px;
+}
+
+.upload-description {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6); /* Lighter grey text color with opacity */
+  margin-bottom: 10px;
+}
+
+.file-requirements {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6); /* Lighter grey text color with opacity */
+  margin-bottom: 10px;
+}
+
+.checkmark {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6); /* Lighter grey text color with opacity */
+}
+
+.upload-box.uploaded {
+  border-color: #3700b3; /* Change border color when file is uploaded */
+}
+
+.upload-icon {
+  width: 48px; /* Adjust width and height as needed */
+  height: 48px;
+}
+
+.preview-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding-top: 100%; /* Maintain aspect ratio (1:1) for square preview */
+  overflow: hidden;
+  border-radius: 15px; /* Rounded corners */
+}
+
+.uploaded-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px; /* Rounded corners */
+}
+
+
+.clear-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #6200ee;
   color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.App-link {
-  color: #61dafb;
+.clear-button:hover {
+  background-color: #3700b3;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.predictions {
+  display: flex;
+  flex-direction: column; /* Ensure predictions are stacked in a column */
+  align-items: center;
+  justify-content: center;
+  background-color: purple;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px; /* Add space between sections */
+}
+
+.prediction-container {
+  padding: 1.5rem;
+  border-radius: 2rem;
+  text-align: center;
+}
+
+.prediction {
+  margin-bottom: 10px; /* Space between prediction items */
+}
+
+.prediction p {
+  margin: 0; /* Remove default margin for paragraphs inside predictions */
+}
+
+.cat-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cat-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 15px; /* Rounded corners for the image */
+}
+
+.button-section {
+  text-align: center;
+  margin-top: 20px;
+  position: relative; /* Position relative for absolute positioning */
+}
+
+.upload-button {
+  padding: 15px 20px;
+  border-radius: 20px;
+  border: none;
+  background-color: #6200ee;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.upload-button:hover {
+  background-color: #3700b3;
+}
+
+.upload-button.disabled {
+  opacity: 0.5; /* Example: Reduce opacity when disabled */
+  cursor: not-allowed; /* Change cursor to not-allowed */
+}
+
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: 30% 30% 40%; /* Three columns: Upload, Predictions, Cat */
   }
-  to {
-    transform: rotate(360deg);
-  }
+}
+
+.btn-background {
+  position: absolute; /* Position absolute to overlap button */
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 130px;
+  object-fit: cover; /* Ensure the image covers the entire button */
+  z-index: 0; /* Behind the button */
+  pointer-events: none; /* Allow clicks to fall through to button */
 }
