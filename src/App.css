@@ -37,6 +37,8 @@ body {
   background-color: rgba(68, 59, 55, 0.6);
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  position: relative; /* For positioning child elements */
+  margin-top: 100px; /* Adjust this value as needed for spacing */
 }
 
 @media (max-width: 768px) {
@@ -54,7 +56,6 @@ body {
   grid-template-rows: auto; /* Single row */
   gap: 20px; /* Gap between grid items */
 }
-
 
 .upload-section {
   margin-bottom: 20px; /* Add space between sections */
@@ -130,7 +131,6 @@ body {
   border-radius: 15px; /* Rounded corners */
 }
 
-
 .clear-button {
   position: absolute;
   top: 10px;
@@ -154,6 +154,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: purple;
+  opacity: 0.8;
   border-radius: 15px;
   padding: 20px;
   margin-bottom: 20px; /* Add space between sections */
@@ -171,6 +172,19 @@ body {
 
 .prediction p {
   margin: 0; /* Remove default margin for paragraphs inside predictions */
+}
+
+.prediction a {
+  color: white;
+  text-decoration: underline; /* Optional: Add underline for better link indication */
+}
+
+.prediction a:hover {
+  text-decoration: none; /* Remove underline on hover */
+}
+
+.results-heading {
+  text-decoration: underline;
 }
 
 .cat-section {
@@ -201,15 +215,19 @@ body {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  z-index: 1; /* Ensure button is above background image */
 }
 
-.upload-button:hover {
-  background-color: #3700b3;
-}
-
-.upload-button.disabled {
-  opacity: 0.5; /* Example: Reduce opacity when disabled */
-  cursor: not-allowed; /* Change cursor to not-allowed */
+.btn-background {
+  position: absolute; /* Position absolute to overlap button */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 150px;
+  object-fit: cover; /* Ensure the image covers the entire button */
+  z-index: 0; /* Behind the button */
+  pointer-events: none; /* Allow clicks to fall through to button */
 }
 
 @media (min-width: 768px) {
@@ -218,14 +236,59 @@ body {
   }
 }
 
-.btn-background {
-  position: absolute; /* Position absolute to overlap button */
-  top: 48%;
+/* Floating menu styles */
+.floating-menu {
+  position: absolute;
+  top: 20px; /* Adjust as needed to position below the top of the page */
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 160px;
-  height: 130px;
-  object-fit: cover; /* Ensure the image covers the entire button */
-  z-index: 0; /* Behind the button */
-  pointer-events: none; /* Allow clicks to fall through to button */
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: row;
+  gap: 10px; /* Space between icons */
+  background-color: rgba(68, 59, 55, 0.8); /* Background color with opacity */
+  padding: 10px;
+  border-radius: 15px;
+  z-index: 2; /* Ensure menu is above other content */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow for better visibility */
+}
+
+.menu-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
+}
+
+.menu-icon:hover {
+  transform: scale(1.1); /* Slightly enlarge icon on hover */
+}
+
+.menu-icon.active {
+  opacity: 1; /* Full opacity for active icon */
+  background-color: rgba(0, 0, 0, 0.3); /* Darker background color for active icon */
+  border-radius: 10px; /* Optional: Make the background color round */
+  padding: 5px;
+}
+
+.facts-container {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.floating-menu-active {
+  position: absolute;
+  bottom: -2px; /* Adjust as needed */
+  height: 2px; /* Height of the indicator */
+  background-color: #ffffff; /* Color of the indicator */
+  transition: left 0.3s, width 0.3s; /* Smooth transition */
+}
+
+.fact {
+  margin-top: 20px; /* Adjust as needed */
+  padding: 20px;
+  border: 1px solid #ccc; /* Example border */
+  border-radius: 8px; /* Example border radius */
+  margin-bottom: 100px;
 }
