@@ -16,6 +16,7 @@ function App() {
   const [loading, setLoading] = useState(false); // State to track loading state
   const [currentView, setCurrentView] = useState('upload'); // State to manage view switching
   const [catFact, setCatFact] = useState('');
+  const [error, setError] = useState(null);
 
   // Ref for floating-menu-active indicator
   const activeIndicatorRef = useRef(null);
@@ -91,6 +92,7 @@ function App() {
   const handleUpload = () => {
     if (selectedFile) {
       setLoading(true); // Set loading state to true
+      setError(null); // Clear previous error
 
       const formData = new FormData();
       formData.append('image', selectedFile);
@@ -108,11 +110,17 @@ function App() {
         })
         .then((response) => {
           console.log('Response from server:', response.data);
-          setPredictions(response.data.predictions);
+          const filteredPredictions = response.data.predictions.filter(prediction => prediction.confidence >= 0.3);
+
+          if (filteredPredictions.length === 0) {
+            setPredictions([{ class: 'Could not confidently identify', confidence: 'N/A' }]);
+          } else {
+            setPredictions(filteredPredictions);
+          }
         })
         .catch((error) => {
           console.error('Error uploading file:', error);
-          // Optionally handle error scenarios
+          setError('Error - Server ran into a problem');
         })
         .finally(() => {
           setLoading(false); // Set loading state to false after request completes
@@ -143,7 +151,7 @@ function App() {
       })
       .catch((error) => {
         console.error('Error fetching cat fact:', error);
-        // Optionally handle error scenarios
+        setError('Error - Server ran into a problem');
       })
       .finally(() => {
         setLoading(false); // Set loading state to false after request completes
@@ -157,7 +165,7 @@ function App() {
 
   // Function to open Google search with breed name
   const openGoogleSearch = (breedName) => {
-    window.open(`https://www.google.com/search?q=${breedName}`, '_blank');
+    window.open(`https://www.google.com/search?q=${breedName} Cat`, '_blank');
   };
 
   return (
@@ -200,7 +208,7 @@ function App() {
                     <div className={`upload-box ${selectedFile ? 'uploaded' : ''}`}>
                       {!selectedFile && (
                         <>
-                          <span className="upload-text">Drag and drop an image</span>
+                          <span className="upload-text">Drag and drop an image of your cat</span>
                           <span className="upload-description">or browse to upload.</span>
                           <span className="file-requirements">File must be JPEG, JPG or PNG and up to 40MB</span>
                           <span className="checkmark">✓ Free to use</span>
@@ -222,7 +230,8 @@ function App() {
                   <div className="prediction-container">
                     <h2 className="results-heading">Results</h2>
                     {loading && <LoadingSpinner />} {/* Render loading spinner component */}
-                    {!loading && predictions.length > 0 && (
+                    {error && <p>{error}</p>}
+                    {!loading && !error && predictions.length > 0 && (
                       <div className="prediction">
                         <p>
                           • Breed -{' '}
